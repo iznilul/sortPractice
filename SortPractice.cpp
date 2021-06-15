@@ -4,14 +4,14 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
+//打印数组
 void show(vector<int> nums){
     int len = nums.size();
     for(int i=0;i<len;i++){
         printf("%d%s", nums[i],i==len-1?"\n":" ");
     }
 }
-
+//冒泡排序
 void bubbleSort(vector<int> nums){
     int len=nums.size();
     for(int i=1;i<len-1;i++){
@@ -23,7 +23,7 @@ void bubbleSort(vector<int> nums){
     }
     show(nums);
 }
-
+//冒泡排序改进
 void bubbleSortImprove(vector<int> nums){
     int len=nums.size();
     for(int i=1;i<len-1;i++){
@@ -39,7 +39,7 @@ void bubbleSortImprove(vector<int> nums){
     }
     show(nums);
 }
-
+//鸡尾酒排序
 void cocktailSort(vector<int> nums){
     int len=nums.size();
     int left=0,right=len-1;
@@ -57,7 +57,7 @@ void cocktailSort(vector<int> nums){
     }
     show(nums);
 }
-
+//选择排序
 void selectionSort(vector<int> &nums){
     int len=nums.size();
     int min;
@@ -74,7 +74,7 @@ void selectionSort(vector<int> &nums){
     }
     show(nums);
 }
-
+//插入排序
 void insertionSort(vector<int> &nums){
      int len=nums.size();
     for (int i = 1; i < len; i++) {
@@ -87,7 +87,7 @@ void insertionSort(vector<int> &nums){
     }
     show(nums);
 }
-
+//希尔排序
 void shellSort(vector<int> nums){
     int len=nums.size();
     int h=0;
@@ -108,6 +108,7 @@ void shellSort(vector<int> nums){
     }
     show(nums);
 }
+//并操作
 void merge(vector<int> &nums,int left,int mid,int right){
     int len = right - left + 1;
     vector<int> temp(len);
@@ -127,6 +128,7 @@ void merge(vector<int> &nums,int left,int mid,int right){
         nums[left++] = temp[k];
     }
 }
+//归并排序
 void mergeSort(vector<int> &nums,int left,int right){
     if(left==right)
         return ;
@@ -135,6 +137,7 @@ void mergeSort(vector<int> &nums,int left,int right){
     mergeSort(nums, mid + 1, right);
     merge(nums, left, mid, right);
 }
+//堆调整
 void heapify(vector<int> &nums,int i,int size){
     int leftChild = 2 * i + 1;
     int rightChild = 2 * i + 2;
@@ -151,14 +154,14 @@ void heapify(vector<int> &nums,int i,int size){
     }
 
 }
-
+//建立一个最大堆
 void buildHeap(vector<int> &nums){
     int len = nums.size();
     for(int i=len/2-1;i>=0;i--){
         heapify(nums, i, len);
     }
 }
-
+//堆排序
 void heapSort(vector<int> &nums){
     int len = nums.size();
     buildHeap(nums);
@@ -169,7 +172,7 @@ void heapSort(vector<int> &nums){
     show(nums);
 }
 
-
+//快速排序
 void quickSort(vector<int>& nums,int left,int right){
     if(left>=right)
         return ;
@@ -188,7 +191,7 @@ void quickSort(vector<int>& nums,int left,int right){
     quickSort(nums,left,i-1);
     quickSort(nums,i+1,right);
 }
-
+//计数排序
 void countingSort(vector<int> nums){
     const int k = 100;
     int count[k]={0};
@@ -209,10 +212,48 @@ void countingSort(vector<int> nums){
     show(nums);
 }
 
-
+//得到元素x的第d位数字
+int getDigit(int x,int d){
+    if(d==1)
+        return x%10;
+    else {
+        int value = x / ( (d - 1) * 10) % 10;
+        return value;
+    }
+}
+//根据元素的d位数字进行计数排序
+void radixCountSort(vector<int> &nums,vector<int> count,int d,int radix){
+    int len = nums.size();
+    vector<int> temp(len);
+    for (int i = 0; i <len ; i++) {
+        count[getDigit(nums[i],d)]++;
+    }
+    for(int i=1;i<radix;i++){
+        count[i] = count[i - 1] + count[i];
+    }
+    for (int i = len - 1; i >= 0; i--) {
+        int digit = getDigit(nums[i],d);
+        temp[--count[digit]] = nums[i];//count最小为1
+    }
+    for (int i = 0; i < len; i++) {
+        nums[i] = temp[i];
+    }
+}
+//基数排序
+void radixSort(vector<int> &nums){
+    const int digitNum=2;//样例数组的最大位数
+    const int radix = 10;
+    vector<int> count(radix, 0);
+    for(int i=1;i<=digitNum;i++){
+        radixCountSort(nums, count, i, radix);
+    }
+    show(nums);
+}
+//划分桶边界
 int mapToBucket(int x){
     return x / 10;
 }
+//可以随便选择一种排序方法将桶内的方法进行排序
 void bucketInsertSort(vector<int> &nums,int left,int right){
     for(int i=left+1;i<=right;i++){
         int get = nums[i];
@@ -224,6 +265,7 @@ void bucketInsertSort(vector<int> &nums,int left,int right){
         nums[j + 1] = get;
     }
 }
+//将数组内的元素按照边界放入桶内
 void bucketCountSort(vector<int> &nums,int count[],int bucketNum){
     int len = nums.size();
     vector<int> temp(len);
@@ -241,6 +283,7 @@ void bucketCountSort(vector<int> &nums,int count[],int bucketNum){
         nums[i] = temp[i];
     }
 }
+//桶排序
 void bucketSort(vector<int> &nums){
     const int bucketNum = 5;
     int count[bucketNum]={0};
@@ -254,19 +297,21 @@ void bucketSort(vector<int> &nums){
     }
     show(nums);
 }
+
 int main(){
     vector<int> nums = {2, 4, 7, 0, 5, 12, 23, 9, 4, 1};
     int len=nums.size();
-    bubbleSort(nums);
-    bubbleSortImprove(nums);
-    cocktailSort(nums);
-    selectionSort(nums);
-    insertionSort(nums);
-    shellSort(nums);
-    mergeSort(nums, 0, len - 1);show(nums);
-    heapSort(nums);
-    quickSort(nums, 0, len - 1);show(nums);
-    countingSort(nums);
-    bucketSort(nums);
+    bubbleSort(nums);//冒泡排序
+    bubbleSortImprove(nums);//冒泡排序改进
+    cocktailSort(nums);//鸡尾酒排序
+    selectionSort(nums);//选择排序
+    insertionSort(nums);//插入排序
+    shellSort(nums);//希尔排序
+    mergeSort(nums, 0, len - 1);show(nums);//归并排序
+    heapSort(nums);//堆排序
+    quickSort(nums, 0, len - 1);show(nums);//快速排序
+    countingSort(nums);//计数排序
+    radixSort(nums);//基数排序
+    bucketSort(nums);//桶排序
     return 0;
 }
