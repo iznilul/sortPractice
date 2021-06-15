@@ -11,7 +11,7 @@ void show(vector<int> nums){
         printf("%d%s", nums[i],i==len-1?"\n":" ");
     }
 }
-//冒泡排序
+//冒泡排序  O(n²) 稳定
 void bubbleSort(vector<int> nums){
     int len=nums.size();
     for(int i=1;i<len-1;i++){
@@ -23,7 +23,7 @@ void bubbleSort(vector<int> nums){
     }
     show(nums);
 }
-//冒泡排序改进
+//冒泡排序改进  O(n²) 稳定
 void bubbleSortImprove(vector<int> nums){
     int len=nums.size();
     for(int i=1;i<len-1;i++){
@@ -39,7 +39,7 @@ void bubbleSortImprove(vector<int> nums){
     }
     show(nums);
 }
-//鸡尾酒排序
+//鸡尾酒排序  O(n²) 稳定
 void cocktailSort(vector<int> nums){
     int len=nums.size();
     int left=0,right=len-1;
@@ -57,7 +57,7 @@ void cocktailSort(vector<int> nums){
     }
     show(nums);
 }
-//选择排序
+//选择排序 O(n²) 不稳定
 void selectionSort(vector<int> &nums){
     int len=nums.size();
     int min;
@@ -74,7 +74,7 @@ void selectionSort(vector<int> &nums){
     }
     show(nums);
 }
-//插入排序
+//插入排序  O(n²) 稳定
 void insertionSort(vector<int> &nums){
      int len=nums.size();
     for (int i = 1; i < len; i++) {
@@ -87,7 +87,7 @@ void insertionSort(vector<int> &nums){
     }
     show(nums);
 }
-//希尔排序
+//希尔排序  O(n²) //不稳定
 void shellSort(vector<int> nums){
     int len=nums.size();
     int h=0;
@@ -128,7 +128,7 @@ void merge(vector<int> &nums,int left,int mid,int right){
         nums[left++] = temp[k];
     }
 }
-//归并排序
+//归并排序   O(nlogn) 稳定
 void mergeSort(vector<int> &nums,int left,int right){
     if(left==right)
         return ;
@@ -161,7 +161,7 @@ void buildHeap(vector<int> &nums){
         heapify(nums, i, len);
     }
 }
-//堆排序
+//堆排序    O(nlogn)  不稳定
 void heapSort(vector<int> &nums){
     int len = nums.size();
     buildHeap(nums);
@@ -172,7 +172,7 @@ void heapSort(vector<int> &nums){
     show(nums);
 }
 
-//快速排序
+//快速排序    O(nlogn)    不稳定
 void quickSort(vector<int>& nums,int left,int right){
     if(left>=right)
         return ;
@@ -191,7 +191,7 @@ void quickSort(vector<int>& nums,int left,int right){
     quickSort(nums,left,i-1);
     quickSort(nums,i+1,right);
 }
-//计数排序
+//计数排序       O(n+k)     稳定
 void countingSort(vector<int> nums){
     const int k = 100;
     int count[k]={0};
@@ -239,7 +239,7 @@ void radixCountSort(vector<int> &nums,vector<int> count,int d,int radix){
         nums[i] = temp[i];
     }
 }
-//基数排序
+//基数排序   O(n+k)    稳定
 void radixSort(vector<int> &nums){
     const int digitNum=2;//样例数组的最大位数
     const int radix = 10;
@@ -283,7 +283,7 @@ void bucketCountSort(vector<int> &nums,int count[],int bucketNum){
         nums[i] = temp[i];
     }
 }
-//桶排序
+//桶排序     O(n+k)    稳定
 void bucketSort(vector<int> &nums){
     const int bucketNum = 5;
     int count[bucketNum]={0};
