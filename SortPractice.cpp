@@ -191,6 +191,33 @@ void quickSort(vector<int>& nums,int left,int right){
     quickSort(nums,left,i-1);
     quickSort(nums,i+1,right);
 }
+//随机快速排序
+int divide(vector<int>& nums, int start, int end)
+{
+    int i=rand()%(end-start+1)+start;
+    swap(nums[start],nums[i]);
+    int cur=nums[start];
+    while(start<end)
+    {
+        while(start<end && nums[end]>=cur)--end;
+//        nums[start]=nums[end];
+        swap(nums[start],nums[end]);
+        while(start<end && nums[start]<=cur)++start;
+//        nums[end]=nums[start];
+        swap(nums[start], nums[end]);
+    }
+//    nums[start]=cur;
+    return start;
+}
+void randQuickSort(vector<int>& nums,int start,int end)
+{
+    if(start<end)
+    {
+        int mid=divide(nums,start,end);
+        quickSort(nums,start,mid-1);
+        quickSort(nums,mid+1,end);
+    }
+}
 //计数排序       O(n+k)     稳定
 void countingSort(vector<int> nums){
     const int k = 100;
@@ -299,19 +326,21 @@ void bucketSort(vector<int> &nums){
 }
 
 int main(){
-    vector<int> nums = {2, 4, 7, 0, 5, 12, 23, 9, 4, 1};
+//    vector<int> nums = {2, 4, 7, 0, 5, 12, 23, 9, 4, 1};
+    vector<int> nums={-74,48,-20,2,10,-84,-5,-9,11,-24,-91,2,-71,64,63,80,28,-30,-58,-11,-44,-87,-22,54,-74,-10,-55,-28,-46,29,10,50,-72,34,26,25,8,51,13,30,35,-8,50,65,-6,16,-2,21,-78,35,-13,14,23,-3,26,-90,86,25,-56,91,-13,92,-25,37,57,-20,-69,98,95,45,47,29,86,-28,73,-44,-46,65,-84,-96,-24,-12,72,-68,93,57,92,52,-45,-2,85,-63,56,55,12,-85,77,-39};
     int len=nums.size();
-    bubbleSort(nums);//冒泡排序
-    bubbleSortImprove(nums);//冒泡排序改进
-    cocktailSort(nums);//鸡尾酒排序
-    selectionSort(nums);//选择排序
-    insertionSort(nums);//插入排序
-    shellSort(nums);//希尔排序
-    mergeSort(nums, 0, len - 1);show(nums);//归并排序
-    heapSort(nums);//堆排序
-    quickSort(nums, 0, len - 1);show(nums);//快速排序
-    countingSort(nums);//计数排序
-    radixSort(nums);//基数排序
-    bucketSort(nums);//桶排序
+//    bubbleSort(nums);//冒泡排序
+//    bubbleSortImprove(nums);//冒泡排序改进
+//    cocktailSort(nums);//鸡尾酒排序
+//    selectionSort(nums);//选择排序
+//    insertionSort(nums);//插入排序
+//    shellSort(nums);//希尔排序
+//    mergeSort(nums, 0, len - 1);show(nums);//归并排序
+//    heapSort(nums);//堆排序
+//    quickSort(nums, 0, len - 1);show(nums);//快速排序
+        randQuickSort(nums,0,len-1);show(nums);
+//    countingSort(nums);//计数排序
+//    radixSort(nums);//基数排序
+//    bucketSort(nums);//桶排序
     return 0;
 }
